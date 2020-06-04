@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
-    lateinit var articulos: ListaArticulos
+    lateinit var articulos: List<Articulo>
     lateinit var context: Context
 
-    fun RecyclerAdapter(articulos: ListaArticulos, context: Context){ //constructor
+    fun RecyclerAdapter(articulos: List<Articulo>, context: MainActivity){ //constructor
         this.articulos = articulos
         this.context = context
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) { //se fija que elemento del objeto va en que posicion del reciclerview segun su posicion
-        val item = articulos.results.get(position)
+        val item = articulos.get(position)
         holder.bind(item, context)
     }
 
@@ -30,7 +30,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
     }
 
     override fun getItemCount(): Int {
-        return articulos.results.size
+        return articulos.size
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) { //adjunta cada dato de una posicion de la lista al item de la vista

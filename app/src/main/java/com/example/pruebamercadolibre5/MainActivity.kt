@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity() {
         btn_buscar.setOnClickListener { buscar() }
     }
 
-    fun buscar(): ListaArticulos{
-        lateinit var articulos: ListaArticulos
-
+    fun buscar(){
 
         try {
 
@@ -35,25 +33,21 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<ListaArticulos>, response: Response<ListaArticulos>) {
                     Toast.makeText(this@MainActivity, "Entro", Toast.LENGTH_LONG).show()
                     if (response.isSuccessful) {
-                        articulos.results = response.body()!!.results
-                       // var lista:List<Articulo> = respuesta!!.results
-                       // mAdapter.RecyclerAdapter(lista, this@MainActivity)
-                       // mRecyclerview.adapter = mAdapter
+                       var articulos = response.body()!!.results
+                        setUpRecyclerView(articulos)
                     }
                 }
             })
 
         }catch (e : Exception){
-            println(e)
         }
-        return articulos
     }
 
-    fun setUpRecyclerView(){
+    fun setUpRecyclerView(art: List<Articulo>){
         mRecyclerview = findViewById(R.id.rvListaArticulos)
         mRecyclerview.setHasFixedSize(true)
         mRecyclerview.layoutManager = LinearLayoutManager(this)
-        mAdapter.RecyclerAdapter(buscar(), this)
+        mAdapter.RecyclerAdapter(art, this)
         mRecyclerview.adapter = mAdapter
     }
 }
